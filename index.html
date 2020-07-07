@@ -66,44 +66,6 @@
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-  <script>
-    new Vue({
-      el: '#app',
-      mounted() {
-        axios
-          .get('https://randomuser.me/api/?results=10')
-          .then(response => (
-            this.users = response.data.results.map(user => {
-              return {
-                username: user.login.username,
-                firstName: user.name.first,
-                lastName: user.name.last,
-                fullName: `${user.name.first} ${user.name.last}`,
-                picture: user.picture.medium,
-                selected: true
-              }
-            })
-          ))
-          .catch(error => console.log(error))
-      },
-      data: {
-        title: 'Click para mover de grupo',
-        users: []
-      },
-      methods: {
-        iconClass(value) {
-          return value ? 'fa fa-angle-double-right' : 'fa fa-angle-double-left';
-        }
-      },
-      computed: {
-        selectedUsers() {
-          return this.users.filter(user => user.selected === true);
-        },
-        unSelectedUsers() {
-          return this.users.filter(user => user.selected === false);
-        }
-      }
-    });
-  </script> 
+  <script src="app.js"></script> 
 </body>
 </html>
