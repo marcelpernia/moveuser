@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css">
+  <title>Nuevo proyecto</title>
+</head>
+<body class="has-background-white-bis">
+  
+  <div id="app">
+    <section class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            {{title}}
+          </h1>
+        </div>
+      </div>
+    </section>
+    <div class="section">
+      <div class="container">
+          <div class="columns is-mobile">
+            <div class="column is-half">
+              <h3 class="title">Grupo A</h3>
+              <div class="box is-unselectable pl-0 py-0 is-clipped" v-for="user in selectedUsers" @click.prevent="user.selected = !user.selected">
+                <div class="level is-mobile">
+                  <div class="level-left">
+                    <div class="level-item">
+                      <figure class="figure imagen is-96x96">
+                        <img :src="user.picture" alt="">
+                      </figure>
+                    </div>
+                    <div class="level-item">
+                      <p class="is-size-5">{{user.fullName}}</p>
+                    </div>
+                  </div>
+                  <div class="level-right"><span class="icon"><i :class="iconClass(user.selected)"></i></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <h3 class="title">Grupo B</h3>
+              <div class="box is-unselectable pl-0 py-0 is-clipped" v-for="user in unSelectedUsers" @click.prevent="user.selected = !user.selected">
+                <div class="level is-mobile">
+                  <div class="level-left">
+                    <div class="level-item">
+                      <figure class="figure imagen is-96x96">
+                        <img :src="user.picture" alt="">
+                      </figure>
+                    </div>
+                    <div class="level-item">
+                      <p class="is-size-5">{{user.fullName}}</p>
+                    </div>
+                  </div>
+                  <div class="level-right"><span class="icon"><i :class="iconClass(user.selected)"></i></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      mounted() {
+        axios
+          .get('https://randomuser.me/api/?results=10')
+          .then(response => (
+            this.users = response.data.results.map(user => {
+              return {
+                username: user.login.username,
+                firstName: user.name.first,
+                lastName: user.name.last,
+                fullName: `${user.name.first} ${user.name.last}`,
+                picture: user.picture.medium,
+                selected: true
+              }
+            })
+          ))
+          .catch(error => console.log(error))
+      },
+      data: {
+        title: 'Click para mover de grupo',
+        users: []
+      },
+      methods: {
+        iconClass(value) {
+          return value ? 'fa fa-angle-double-right' : 'fa fa-angle-double-left';
+        }
+      },
+      computed: {
+        selectedUsers() {
+          return this.users.filter(user => user.selected === true);
+        },
+        unSelectedUsers() {
+          return this.users.filter(user => user.selected === false);
+        }
+      }
+    });
+  </script> 
+</body>
+</html>
