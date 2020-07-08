@@ -22,48 +22,48 @@
     </section>
     <div class="section">
       <div class="container">
-          <div class="columns is-mobile">
-            <div class="column is-half">
-              <h3 class="title">Grupo A</h3>
-              <div class="box is-unselectable pl-0 py-0 is-clipped" v-for="user in selectedUsers" @click.prevent="user.selected = !user.selected">
-                <div class="level is-mobile">
-                  <div class="level-left">
-                    <div class="level-item">
-                      <figure class="figure imagen is-96x96">
-                        <img :src="user.picture" alt="">
-                      </figure>
-                    </div>
-                    <div class="level-item">
-                      <p class="is-size-5">{{user.fullName}}</p>
-                    </div>
-                  </div>
-                  <div class="level-right"><span class="icon"><i :class="iconClass(user.selected)"></i></span></div>
-                </div>
-              </div>
-            </div>
-            <div class="column is-half">
-              <h3 class="title">Grupo B</h3>
-              <div class="box is-unselectable pl-0 py-0 is-clipped" v-for="user in unSelectedUsers" @click.prevent="user.selected = !user.selected">
-                <div class="level is-mobile">
-                  <div class="level-left">
-                    <div class="level-item">
-                      <figure class="figure imagen is-96x96">
-                        <img :src="user.picture" alt="">
-                      </figure>
-                    </div>
-                    <div class="level-item">
-                      <p class="is-size-5">{{user.fullName}}</p>
-                    </div>
-                  </div>
-                  <div class="level-right"><span class="icon"><i :class="iconClass(user.selected)"></i></span></div>
-                </div>
-              </div>
-            </div>
-          </div>
+        
+        <user-list :grupoa="selectedUsers" :grupob="unSelectedUsers"></user-list>
+          
       </div>
     </div>
   </div>
+
+  <script type="text/x-template" id="user-template">
   
+    <div>
+      <div v-for="usr in listado" class="box is-unselectable pl-0 py-0 is-clipped" @click.prevent="usr.selected = !usr.selected">
+        <div class="level is-mobile">
+          <div class="level-left">
+            <div class="level-item">
+              <figure class="figure imagen is-96x96">
+                <img :src="usr.picture" alt="">
+              </figure>
+            </div>
+            <div class="level-item">
+              <p class="is-size-5">{{usr.fullName}}</p>
+            </div>
+          </div>
+          <div class="level-right"><span class="icon"><i :class="iconClass(usr.selected)"></i></span></div>
+        </div>
+      </div>
+    </div>
+
+  </script>
+
+  <script type="text/x-template" id="users-template">
+    <div class="columns is-desktop">
+      <div class="column">
+        <h3 class="title">Grupo A</h3>
+        <user :listado="grupoa"></user> 
+      </div>
+      <div class="column">
+        <h3 class="title">Grupo B</h3>
+        <user :listado="grupob"></user> 
+      </div>
+    </div>
+  </script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   <script src="app.js"></script> 

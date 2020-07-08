@@ -1,3 +1,21 @@
+const user = {
+  props: ['usuario', 'listado'],
+  template: '#user-template',
+  methods: {
+    iconClass(value) {
+      return value ? 'fa fa-angle-double-right' : 'fa fa-angle-double-left';
+    }
+  }
+}
+
+const userList = {
+  props: ['grupoa', 'grupob'],
+  template: '#users-template',
+  components: {
+    user
+  }
+}
+
 new Vue({
   el: '#app',
   mounted() {
@@ -21,11 +39,6 @@ new Vue({
     title: 'Click para mover de grupo',
     users: []
   },
-  methods: {
-    iconClass(value) {
-      return value ? 'fa fa-angle-double-right' : 'fa fa-angle-double-left';
-    }
-  },
   computed: {
     selectedUsers() {
       return this.users.filter(user => user.selected === true);
@@ -33,5 +46,8 @@ new Vue({
     unSelectedUsers() {
       return this.users.filter(user => user.selected === false);
     }
+  },
+  components: {
+    userList
   }
 });
